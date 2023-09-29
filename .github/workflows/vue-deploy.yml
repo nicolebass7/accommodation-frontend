@@ -40,4 +40,4 @@ jobs:
           SOURCE: "dist/"
           REMOTE_HOST: "project3.eaglesoftwareteam.com"
           REMOTE_USER: ubuntu
-          TARGET: "/var/www/html/2023/project2/t5"
+          TARGET: "/var/www/html/2023/project3/t5"
