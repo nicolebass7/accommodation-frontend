@@ -19,7 +19,7 @@ jobs:
           touch .env
           echo VITE_APP_CLIENT_ID=${{secrets.VITE_APP_CLIENT_ID}} >> .env
           echo VITE_APP_API_URL=${{secrets.VITE_APP_API_URL}} >> .env
-          echo VITE_APP_CLIENT_URL=https://tutorial.eaglesoftwareteam.com >> .env
+          echo VITE_APP_CLIENT_URL=https://project3.eaglesoftwareteam.com >> .env
           echo VITE_APP_CLIENT_SECRET=${{secrets.VITE_APP_CLIENT_SECRET}} >> .env
           echo VITE_APP_REFRESH_TOKEN=${{secrets.VITE_APP_REFRESH_TOKEN}} >> .env
 
@@ -33,5 +33,5 @@ jobs:
           VITE_APP_REFRESH_TOKEN: ${{secrets.VITE_APP_REFRESH_TOKEN}}
         with:
           build: npx cypress info
-          config: baseUrl=https://tutorial.eaglesoftwareteam.com/tutorial-frontend-vue3
+          config: baseUrl=https://project3.eaglesoftwareteam.com/accommodations-frontend
           headed: true
