@@ -3,12 +3,15 @@ import ocLogo from "/oc-logo-white.png";
 import { ref, onMounted } from "vue";
 import Utils from "../config/utils";
 import AuthServices from "../services/authServices";
+import { useRouter } from "vue-router";
+
 
 const user = ref(null);
 const title = ref("Accommodations");
 const initials = ref("");
 const name = ref("");
 const logoURL = ref("");
+const router = useRouter();
 
 const resetMenu = () => {
   user.value = null;
@@ -24,7 +27,7 @@ const logout = () => {
     .then((response) => {
       console.log(response);
       Utils.removeItem("user");
-      $router.push({ name: "login" });
+      router.push({ name: "login" });
     })
     .catch((error) => {
       console.log("error", error);
