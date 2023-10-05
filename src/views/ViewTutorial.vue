@@ -85,7 +85,7 @@ onMounted(() => {
             <tr>
               <th class="text-left">Title</th>
               <th class="text-left">Description</th>
-              <th class="text-left">Actions</th>
+              <th class="text-left">Action</th>
             </tr>
           </thead>
           <tbody>
