@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import TutorialServices from "../services/tutorialServices";
 import { useRouter } from "vue-router";
+import requestServices from "../services/requestServices";
 
 const router = useRouter();
 const valid = ref(false);
@@ -16,7 +16,7 @@ const props = defineProps({
 
 const retrieveTutorial = async () => {
   try {
-    const response = await TutorialServices.get(props.id);
+    const response = await requestServices.get(props.id);
     tutorial.value = response.data;
   } catch (e) {
     message.value = e.response.data.message;
@@ -29,7 +29,7 @@ const updateTutorial = async () => {
     description: tutorial.value.description,
   };
   try {
-    const response = await TutorialServices.update(props.id, data);
+    const response = await requestServices.update(props.id, data);
     tutorial.value.id = response.data.id;
     router.push({ name: "tutorials" });
   } catch (e) {

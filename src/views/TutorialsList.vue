@@ -1,8 +1,8 @@
 <script setup>
-import TutorialServices from "../services/tutorialServices";
 import Utils from "../config/utils.js";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+import requestServices from "../services/requestServices";
 
 const router = useRouter();
 const tutorials = ref([]);
@@ -18,7 +18,7 @@ const viewTutorial = (tutorial) => {
 };
 
 const deleteTutorial = (tutorial) => {
-  TutorialServices.delete(tutorial.id)
+  requestServices.delete(tutorial.id)
     .then(() => {
       retrieveTutorials();
     })
@@ -28,7 +28,7 @@ const deleteTutorial = (tutorial) => {
 };
 
 const retrieveTutorials = () => {
-  TutorialServices.getAllForUser(user.userId)
+  requestServices.getAllForUser(user.userId)
     .then((response) => {
       tutorials.value = response.data;
     })
@@ -63,7 +63,7 @@ retrieveTutorials();
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(item, index) in tutorials" :key="item.title">
+            <tr v-for="(item) in tutorials" :key="item.title">
               <td>{{ item.title }}</td>
               <td>{{ item.description }}</td>
               <td>

@@ -1,30 +1,31 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import TutorialServices from "../services/tutorialServices";
+import requestServices from "../services/requestServices";
 import Utils from "../config/utils.js";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
 const valid = ref(false);
 const user = Utils.getStore("user");
-const tutorial = ref({
+const request = ref({
   id: null,
-  title: "",
-  description: "",
+  fName: "",
+  lName: "",
+  studentId: "",
   published: false,
 });
-const message = ref("Enter data and click save");
 
-const saveTutorial = () => {
+const saverequest = () => {
   const data = {
-    title: tutorial.value.title,
-    description: tutorial.value.description,
+    fName: request.value.fName,
+    lName: request.value.lName,
+    studentId: request.value.studentId,
     published: true,
     userId: user.userId,
   };
-  TutorialServices.create(data)
+  requestServices.create(data)
     .then((response) => {
-      tutorial.value.id = response.data.id;
+      request.value.id = response.data.id;
       console.log("add " + response.data);
       router.push({ name: "tutorials" });
     })
@@ -37,6 +38,18 @@ const cancel = () => {
   router.push({ name: "tutorials" });
 };
 
+
+const tx = document.getElementsByTagName("textarea");
+for (let i = 0; i < tx.length; i++) {
+  tx[i].setAttribute("style", "height:" + (tx[i].scrollHeight) + "px;overflow-y:hidden;");
+  tx[i].addEventListener("input", OnInput, false);
+}
+
+function OnInput() {
+  this.style.height = 0;
+  this.style.height = (this.scrollHeight) + "px";
+}
+
 onMounted(() => {
   user.value = Utils.getStore("user");
 });
@@ -46,7 +59,7 @@ onMounted(() => {
   <div>
     <v-container>
       <v-toolbar>
-        <v-toolbar-title>Tutorial Add</v-toolbar-title>
+        <v-toolbar-title>Request Form</v-toolbar-title>
       </v-toolbar>
 
       <br />
@@ -54,25 +67,37 @@ onMounted(() => {
       <br />
       <v-form ref="form" v-model="valid" lazy validation>
         <v-text-field
-          v-model="tutorial.title"
-          id="title"
-          :counter="50"
-          label="Title"
+          v-model="request.fName"
+          id="fName"
+          :counter="100"
+          label="First Name "
           required
         ></v-text-field>
         <v-text-field
-          v-model="tutorial.description"
-          id="description"
-          :counter="50"
-          label="Description"
+          v-model="request.lName"
+          id="lName"
+          :counter="100"
+          label="Last Name "
           required
         ></v-text-field>
+        <v-text-field
+          v-model="request.studentId"
+          id="studentId"
+          :counter="50"
+          label="Student ID"
+          required
+        ></v-text-field> 
+
+        <span>Requests:  </span>
+          <p>{{ message }}</p>
+          <textarea class= "wrap" v-model="message" placeholder="Type your grievances here..."></textarea>
+        <br><br>
 
         <v-btn
           :disabled="!valid"
           color="success"
           class="mr-4"
-          @click="saveTutorial"
+          @click="saverequest"
         >
           Save
         </v-btn>
@@ -82,3 +107,35 @@ onMounted(() => {
     </v-container>
   </div>
 </template>
+<style scoped>
+
+
+textarea {
+    white-space: pre-line;
+    width: 450px;
+    height: 150px;
+    border:3px solid #CCC;
+    border-radius: 4px;
+    resize: both;
+  
+}
+
+.wrap {
+    position: relative;
+    display: inline-block;
+}
+  
+.wrap:after {
+    content:"";
+    border-top: 2px solid #555;
+    width:16px;
+    transform: rotate(-45deg);
+    background:transparent;
+    position: absolute;
+    right: 1px;
+    bottom: 14px;
+    pointer-events: none;
+    border-radius:25%;
+}
+
+</style>
