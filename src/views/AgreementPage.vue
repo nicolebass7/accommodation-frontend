@@ -13,8 +13,14 @@ const props = defineProps({
   label: {
       type: String,
       default: ''
-    }
+    },
+   
 });
+
+const nextPage = () => {
+  router.push({ name: "tutorials" });
+
+};
     
 </script>
 
@@ -39,8 +45,10 @@ const props = defineProps({
           v-model="agreement"
           class="field"
           />
-          <label>I agree</label>
+          <label> I agree </label>
           
+          <br /><br />
+          <v-btn color="success" class="mr-4" @click="nextPage"> Continue </v-btn>
 
         </div>
       </v-card>
