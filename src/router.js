@@ -21,6 +21,7 @@ const router = createRouter({
       path: "/accommodation/academic",
       name: "Academic",
       component: Academic,
+
     },
     {
       path: "/accommodation/chapel",
