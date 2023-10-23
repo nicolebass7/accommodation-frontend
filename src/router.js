@@ -6,14 +6,8 @@ import Academic from "./views/Academic.vue";
 import Chapel from "./views/Chapel.vue";
 import Housing from "./views/Housing.vue";
 import MealPlan from "./views/MealPlan.vue";
-
-
-import TutorialsList from "./views/TutorialsList.vue";
-import EditTutorial from "./views/EditTutorial.vue";
 import newRequest from "./views/newRequest.vue";
-import ViewTutorial from "./views/ViewTutorial.vue";
-import AddLesson from "./views/AddLesson.vue";
-import EditLesson from "./views/EditLesson.vue";
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -48,12 +42,16 @@ const router = createRouter({
       name: "MealPlan",
       component: MealPlan,
     },
-  ],
+    {
       path: "/agreement",
       name: "agreement",
       component: Agreement,
-    },
+    }
+    
   ],
+    
+    
+  
 });
 
 export default router;
