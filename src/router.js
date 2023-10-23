@@ -1,6 +1,12 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 import Login from "./views/Login.vue";
+import Agreement from "./views/AgreementPage.vue";
+import Academic from "./views/Academic.vue";
+import Chapel from "./views/Chapel.vue";
+import Housing from "./views/Housing.vue";
+import MealPlan from "./views/MealPlan.vue";
+
 
 import TutorialsList from "./views/TutorialsList.vue";
 import EditTutorial from "./views/EditTutorial.vue";
@@ -19,38 +25,33 @@ const router = createRouter({
       component: Login,
     },
     {
-      path: "/tutorials",
-      name: "tutorials",
-      component: TutorialsList,
+      path: "/accommodation/academic",
+      name: "Academic",
+      component: Academic,
+
     },
     {
-      path: "/edit/:id",
-      name: "edit",
-      component: EditTutorial,
-      props: true,
-    },
-    {
+      path: "/accommodation/chapel",
+      name: "Chapel",
+      component: Chapel,
       path: "/request",
       name: "request",
       component: newRequest,
     },
     {
-      path: "/view/:id",
-      name: "view",
-      component: ViewTutorial,
-      props: true,
+      path: "/accommodation/housing",
+      name: "Housing",
+      component: Housing,
     },
     {
-      path: "/addLesson/:tutorialId",
-      name: "addLesson",
-      component: AddLesson,
-      props: true,
+      path: "/accommodation/MealPlan",
+      name: "MealPlan",
+      component: MealPlan,
     },
-    {
-      path: "/editLesson/:tutorialId/:lessonId",
-      name: "editLesson",
-      component: EditLesson,
-      props: true,
+  ],
+      path: "/agreement",
+      name: "agreement",
+      component: Agreement,
     },
   ],
 });
