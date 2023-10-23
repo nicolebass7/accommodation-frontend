@@ -19,22 +19,22 @@ const router = createRouter({
     },
     {
       path: "/accommodation/academic",
-      name: "academic",
+      name: "Academic",
       component: Academic,
     },
     {
       path: "/accommodation/chapel",
-      name: "chapel",
+      name: "Chapel",
       component: Chapel,
     },
     {
       path: "/accommodation/housing",
-      name: "housing",
+      name: "Housing",
       component: Housing,
     },
     {
       path: "/accommodation/MealPlan",
-      name: "mealPlan",
+      name: "MealPlan",
       component: MealPlan,
     },
   ],
