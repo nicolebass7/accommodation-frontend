@@ -4,7 +4,7 @@ import Login from "./views/Login.vue";
 
 import TutorialsList from "./views/TutorialsList.vue";
 import EditTutorial from "./views/EditTutorial.vue";
-import AddTutorial from "./views/AddTutorial.vue";
+import newRequest from "./views/newRequest.vue";
 import ViewTutorial from "./views/ViewTutorial.vue";
 import AddLesson from "./views/AddLesson.vue";
 import EditLesson from "./views/EditLesson.vue";
@@ -30,9 +30,9 @@ const router = createRouter({
       props: true,
     },
     {
-      path: "/add",
-      name: "add",
-      component: AddTutorial,
+      path: "/request",
+      name: "request",
+      component: newRequest,
     },
     {
       path: "/view/:id",
