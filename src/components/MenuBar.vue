@@ -58,6 +58,7 @@ onMounted(() => {
       <v-spacer></v-spacer>
       <div v-if="user">
         <v-btn class="mx-2" :to="{ name: 'Academic' }"> List </v-btn>
+        <v-btn class="mx-2" :to="{ name: 'request' }"> Make Request </v-btn>
         <v-btn class="mx-2" :to="{ name: 'Academic' }"> Add Tutorial </v-btn>
       </div>
       <v-menu bottom min-width="200px" rounded offset-y v-if="user">

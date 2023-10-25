@@ -7,6 +7,9 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 const valid = ref(false);
 const user = Utils.getStore("user");
+const checkedNames = ref([]);
+const selected = ref('');
+
 const request = ref({
   id: null,
   fName: "",
@@ -23,12 +26,6 @@ const saverequest = () => {
     published: true,
     userId: user.userId,
 
-
-    
-
-
-
-    
   };
   requestServices.create(data)
     .then((response) => {
@@ -51,6 +48,7 @@ for (let i = 0; i < tx.length; i++) {
   tx[i].setAttribute("style", "height:" + (tx[i].scrollHeight) + "px;overflow-y:hidden;");
   tx[i].addEventListener("input", OnInput, false);
 }
+
 
 function OnInput() {
   this.style.height = 0;
@@ -76,30 +74,52 @@ onMounted(() => {
         <v-text-field
           v-model="request.fName"
           id="fName"
-          :counter="100"
+          :counter="50"
           label="First Name "
           required
         ></v-text-field>
         <v-text-field
           v-model="request.lName"
           id="lName"
-          :counter="100"
+          :counter="50"
           label="Last Name "
           required
         ></v-text-field>
         <v-text-field
           v-model="request.studentId"
           id="studentId"
-          :counter="50"
+          :counter="7"
           label="Student ID"
           required
         ></v-text-field> 
+
+        <div class="mainSelection">Selected: {{ selected }}</div>
+
+<select v-model="selected">
+  <option disabled value="">Please select one</option>
+  <option>2023FA</option>
+  <option>2024SP</option>
+ 
+</select><br>
+
+   <!-- <input type="checkbox" id="Academic" value="Academic" v-model="checkedNames">
+    <label for="Academic">Academic</label> 
+
+    <input type="checkbox" id="Housing" value="Housing" v-model="checkedNames">
+    <label for="Housing">Housing</label>
+
+    <input type="checkbox" id="Meals" value="Meals" v-model="checkedNames">
+    <label for="Meals">Meals</label>
+
+    <input type="checkbox" id="Chapel" value="Chapel" v-model="checkedNames">
+    <label for="Chapel">Chapel</label><br> -->
 
         <span>Requests:  </span>
           <p>{{ message }}</p>
           <textarea class= "wrap" v-model="message" placeholder="Type your grievances here..."></textarea>
         <br><br>
 
+    
         <v-btn
           :disabled="!valid"
           color="success"
@@ -144,5 +164,24 @@ textarea {
     pointer-events: none;
     border-radius:25%;
 }
+
+.mainSelection {
+    overflow:hidden;
+    width:350px;
+    margin-left:35px;
+    background: url("/dropdown-arrow.png") no-repeat #fff 319px 2px;
+    /* dropdown_arrow.png is a 31x28 image */
+}
+
+  select {
+    border: 0;
+    background:transparent;
+    height:32px;
+    border:3px solid #CCC;
+    width:175px;
+
+ 
+}
+
 
 </style>

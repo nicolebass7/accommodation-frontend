@@ -2,11 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 
 import Login from "./views/Login.vue";
 import Agreement from "./views/AgreementPage.vue";
-import Academic from "./views/Academic.vue";
-import Chapel from "./views/Chapel.vue";
-import Housing from "./views/Housing.vue";
-import MealPlan from "./views/MealPlan.vue";
-import newRequest from "./views/newRequest.vue";
+import TutorialList from "./views/TutorialsList.vue";
 
 
 const router = createRouter({
@@ -19,33 +15,14 @@ const router = createRouter({
       component: Login,
     },
     {
-      path: "/accommodation/academic",
-      name: "Academic",
-      component: Academic,
-
-    },
-    {
-      path: "/accommodation/chapel",
-      name: "Chapel",
-      component: Chapel,
-      path: "/request",
-      name: "request",
-      component: newRequest,
-    },
-    {
-      path: "/accommodation/housing",
-      name: "Housing",
-      component: Housing,
-    },
-    {
-      path: "/accommodation/MealPlan",
-      name: "MealPlan",
-      component: MealPlan,
-    },
-    {
       path: "/agreement",
       name: "agreement",
       component: Agreement,
+    },
+    {
+      path: "/tutorials",
+      name: "tutorials",
+      component: TutorialList,
     }
     
   ],
