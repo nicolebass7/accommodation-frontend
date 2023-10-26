@@ -1,5 +1,5 @@
 <script setup>
-import TutorialServices from "../services/tutorialServices";
+import studentServices from "../services/studentServices";
 import Utils from "../config/utils.js";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
@@ -9,16 +9,16 @@ const tutorials = ref([]);
 const user = Utils.getStore("user");
 const message = ref("Search, Edit or Delete Tutorials");
 
-const editTutorial = (tutorial) => {
-  router.push({ name: "edit", params: { id: tutorial.id } });
+const editTutorial = (student) => {
+  router.push({ name: "edit", params: { id: student.id } });
 };
 
-const viewTutorial = (tutorial) => {
-  router.push({ name: "view", params: { id: tutorial.id } });
+const viewTutorial = (student) => {
+  router.push({ name: "view", params: { id: student.id } });
 };
 
-const deleteTutorial = (tutorial) => {
-  TutorialServices.delete(tutorial.id)
+const deleteTutorial = (student) => {
+  studentServices.delete(student.id)
     .then(() => {
       retrieveTutorials();
     })
@@ -28,9 +28,9 @@ const deleteTutorial = (tutorial) => {
 };
 
 const retrieveTutorials = () => {
-  TutorialServices.getAllForUser(user.userId)
+  studentServices.getAllForUser(user.userId)
     .then((response) => {
-      tutorials.value = response.data;
+      student.value = response.data;
     })
     .catch((e) => {
       message.value = e.response.data.message;
@@ -63,9 +63,9 @@ retrieveTutorials();
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(item) in tutorials" :key="item.title">
-              <td>{{ item.title }}</td>
-              <td>{{ item.description }}</td>
+            <tr v-for="(item) in studnet" :key="item.fName">
+              <td>{{ item.fName }}</td>
+              <td>{{ item.lName }}</td>
               <td>
                 <v-icon small class="mx-4" @click="editTutorial(item)">
                   mdi-pencil

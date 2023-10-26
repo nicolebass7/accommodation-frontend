@@ -10,28 +10,28 @@ const user = Utils.getStore("user");
 const checkedNames = ref([]);
 const selected = ref('');
 
-const request = ref({
+const student = ref({
   id: null,
   fName: "",
   lName: "",
   studentId: "",
-  published: false,
+  
 });
 
 const saverequest = () => {
   const data = {
-    fName: request.value.fName,
-    lName: request.value.lName,
-    studentId: request.value.studentId,
-    published: true,
-    userId: user.userId,
+    fName: student.value.fName,
+    lName: student.value.lName,
+    studentId: student.value.studentId,
+   
+    //userId: user.userId,
 
   };
   requestServices.create(data)
     .then((response) => {
-      request.value.id = response.data.id;
+      student.value.id = response.data.id;
       console.log("add " + response.data);
-      router.push({ name: "tutorials" });
+      router.push({ name: "student" });
     })
     .catch((e) => {
       message.value = e.response.data.message;
@@ -39,7 +39,7 @@ const saverequest = () => {
 };
 
 const cancel = () => {
-  router.push({ name: "tutorials" });
+  router.push({ name: "student" });
 };
 
 
@@ -68,32 +68,33 @@ onMounted(() => {
       </v-toolbar>
 
       <br />
-      <h4>{{ message }}</h4>
+      <!-- <h4>{{ message }}</h4> -->
+
       <br />
       <v-form ref="form" v-model="valid" lazy validation>
         <v-text-field
-          v-model="request.fName"
+          v-model="student.fName"
           id="fName"
           :counter="50"
           label="First Name "
           required
         ></v-text-field>
         <v-text-field
-          v-model="request.lName"
+          v-model="student.lName"
           id="lName"
           :counter="50"
           label="Last Name "
           required
         ></v-text-field>
         <v-text-field
-          v-model="request.studentId"
+          v-model="student.studentId"
           id="studentId"
           :counter="7"
           label="Student ID"
           required
         ></v-text-field> 
 
-        <div class="mainSelection">Selected: {{ selected }}</div>
+        <!-- <div class="mainSelection">Selected: {{ selected }}</div>
 
 <select v-model="selected">
   <option disabled value="">Please select one</option>
@@ -102,7 +103,7 @@ onMounted(() => {
  
 </select><br>
 
-   <!-- <input type="checkbox" id="Academic" value="Academic" v-model="checkedNames">
+   <input type="checkbox" id="Academic" value="Academic" v-model="checkedNames">
     <label for="Academic">Academic</label> 
 
     <input type="checkbox" id="Housing" value="Housing" v-model="checkedNames">
@@ -112,12 +113,12 @@ onMounted(() => {
     <label for="Meals">Meals</label>
 
     <input type="checkbox" id="Chapel" value="Chapel" v-model="checkedNames">
-    <label for="Chapel">Chapel</label><br> -->
+    <label for="Chapel">Chapel</label><br>
 
         <span>Requests:  </span>
           <p>{{ message }}</p>
           <textarea class= "wrap" v-model="message" placeholder="Type your grievances here..."></textarea>
-        <br><br>
+        <br><br> -->
 
     
         <v-btn
