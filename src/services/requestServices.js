@@ -1,3 +1,4 @@
+import authServices from "./authServices.js";
 import apiClient from "./services.js";
 
 export default {
@@ -11,7 +12,7 @@ export default {
     return apiClient.get(`/request/${id}`);
   },
   create(data) {
-    return apiClient.post("/request", data);
+    return apiClient.post("/request", authServices,data);
   },
   update(id, data) {
     return apiClient.put(`/request/${id}`, data);

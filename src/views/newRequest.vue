@@ -94,7 +94,7 @@ onMounted(() => {
           required
         ></v-text-field> 
 
-        <!-- <div class="mainSelection">Selected: {{ selected }}</div>
+        <div class="mainSelection">Selected: {{ selected }}</div>
 
 <select v-model="selected">
   <option disabled value="">Please select one</option>
@@ -118,7 +118,7 @@ onMounted(() => {
         <span>Requests:  </span>
           <p>{{ message }}</p>
           <textarea class= "wrap" v-model="message" placeholder="Type your grievances here..."></textarea>
-        <br><br> -->
+        <br><br>
 
     
         <v-btn
