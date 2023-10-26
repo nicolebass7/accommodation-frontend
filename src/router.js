@@ -6,7 +6,8 @@ import Academic from "./views/Academic.vue";
 import Chapel from "./views/Chapel.vue";
 import Housing from "./views/Housing.vue";
 import MealPlan from "./views/MealPlan.vue";
-
+import AdminAccomList from "./views/AdminAccomList.vue";
+import ViewRequest from "./views/ViewRequest.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -16,6 +17,18 @@ const router = createRouter({
       alias: "/login",
       name: "login",
       component: Login,
+    },
+    {
+      path: "/adminAccomList",
+      name: "AdminAccomList",
+      component: AdminAccomList,
+
+    },
+    {
+      path: "/viewRequest",
+      name: "ViewRequest",
+      component: ViewRequest,
+
     },
     {
       path: "/accommodation/academic",
