@@ -2,11 +2,9 @@ import { createRouter, createWebHistory } from "vue-router";
 
 import Login from "./views/Login.vue";
 import Agreement from "./views/AgreementPage.vue";
-import Academic from "./views/Academic.vue";
-import Chapel from "./views/Chapel.vue";
-import Housing from "./views/Housing.vue";
-import MealPlan from "./views/MealPlan.vue";
 import Accommodations from "./views/AccommodationsBackground.vue";
+//import {Role} from "./role.js";
+//import {authenticationService} from "./services";
 
 
 const router = createRouter({
@@ -19,31 +17,10 @@ const router = createRouter({
       component: Login,
     },
     {
-      path: "/accommodation/academic",
-      name: "Academic",
-      component: Academic,
-
-    },
-    {
-      path: "/accommodation/chapel",
-      name: "Chapel",
-      component: Chapel,
-    },
-    {
-      path: "/accommodation/housing",
-      name: "Housing",
-      component: Housing,
-    },
-    {
-      path: "/accommodation/MealPlan",
-      name: "MealPlan",
-      component: MealPlan,
-    },
-  
-    {
       path: "/agreement",
       name: "agreement",
       component: Agreement,
+      //meta: { authorize: [Role.User] }
     },
     {
       path: "/AccommodationsBackground",
@@ -58,3 +35,24 @@ const router = createRouter({
 });
 
 export default router;
+
+router.beforeEach((to, from, next) => {
+  // redirect to login page if not logged in and trying to access a restricted page
+  const { authorize } = to.meta;
+  const currentUser = authenticationService.currentUserValue;
+
+  if (authorize) {
+      if (!currentUser) {
+          // not logged in so redirect to login page with the return url
+          return next({ path: '/login', query: { returnUrl: to.path } });
+      }
+
+      // check if route is restricted by role
+      if (authorize.length && !authorize.includes(currentUser.role)) {
+          // role not authorised so redirect to home page
+          return next({ path: '/' });
+      }
+  }
+
+  next();
+})
