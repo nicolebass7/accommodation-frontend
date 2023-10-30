@@ -6,6 +6,7 @@ import Academic from "./views/Academic.vue";
 import Chapel from "./views/Chapel.vue";
 import Housing from "./views/Housing.vue";
 import MealPlan from "./views/MealPlan.vue";
+import Accommodations from "./views/AccommodationsBackground.vue";
 
 
 const router = createRouter({
@@ -38,11 +39,18 @@ const router = createRouter({
       name: "MealPlan",
       component: MealPlan,
     },
-  ],
+  
+    {
       path: "/agreement",
       name: "agreement",
       component: Agreement,
     },
+    {
+      path: "/AccommodationsBackground",
+      name: "Accommodations Background",
+      component: Accommodations,
+    },
+    
   ],
 });
 
