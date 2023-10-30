@@ -5,20 +5,20 @@ import { ref } from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
-const tutorials = ref([]);
+const students = ref([]);
 const user = Utils.getStore("user");
 const message = ref("Search, Edit or Delete Tutorials");
 
-const editTutorial = (student) => {
-  router.push({ name: "edit", params: { id: student.id } });
+const editTutorial = (students) => {
+  router.push({ name: "edit", params: { id: students.id } });
 };
 
-const viewTutorial = (student) => {
-  router.push({ name: "view", params: { id: student.id } });
+const viewTutorial = (students) => {
+  router.push({ name: "view", params: { id: students.id } });
 };
 
-const deleteTutorial = (student) => {
-  studentServices.delete(student.id)
+const deleteTutorial = (students) => {
+  studentServices.delete(students.id)
     .then(() => {
       retrieveTutorials();
     })
@@ -63,7 +63,7 @@ retrieveTutorials();
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(item) in studnet" :key="item.fName">
+            <tr v-for="(item) in students" :key="item.fName">
               <td>{{ item.fName }}</td>
               <td>{{ item.lName }}</td>
               <td>

@@ -15,7 +15,7 @@ const student = ref({
   fName: "",
   lName: "",
   studentId: "",
-  
+  greievances:"",
 });
 
 const saverequest = () => {
@@ -23,6 +23,7 @@ const saverequest = () => {
     fName: student.value.fName,
     lName: student.value.lName,
     studentId: student.value.studentId,
+    grievances: student.value.grievances
    
     //userId: user.userId,
 
@@ -68,7 +69,7 @@ onMounted(() => {
       </v-toolbar>
 
       <br />
-      <!-- <h4>{{ message }}</h4> -->
+      <h4>{{ message }}</h4>
 
       <br />
       <v-form ref="form" v-model="valid" lazy validation>
@@ -116,8 +117,8 @@ onMounted(() => {
     <label for="Chapel">Chapel</label><br>
 
         <span>Requests:  </span>
-          <p>{{ message }}</p>
-          <textarea class= "wrap" v-model="message" placeholder="Type your grievances here..."></textarea>
+          <p>{{ greievances }}</p>
+          <textarea class= "wrap" id="grievances" v-model="grievances" placeholder="Type your grievances here..."></textarea>
         <br><br>
 
     
