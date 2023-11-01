@@ -22,6 +22,9 @@ export default {
   deleteAll() {
     return apiClient.delete(`students`);
   },
+  getUserId(userId) {
+    return apiClient.get("students/userId/"+ userId);
+  },
   findByTitle(title) {
     return apiClient.get(`students?title=${title}`);
   },

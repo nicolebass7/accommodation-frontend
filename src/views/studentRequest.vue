@@ -7,27 +7,27 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 const students = ref([]);
 const user = Utils.getStore("user");
-const message = ref("Search, Edit or Delete Tutorials");
+const message = ref("Search, Edit or Delete Requests");
 
-const editTutorial = (students) => {
+const editRequest = (students) => {
   router.push({ name: "edit", params: { id: students.id } });
 };
 
-const viewTutorial = (students) => {
+const viewRequest = (students) => {
   router.push({ name: "view", params: { id: students.id } });
 };
 
-const deleteTutorial = (students) => {
+const deleteRequest = (students) => {
   studentServices.delete(students.id)
     .then(() => {
-      retrieveTutorials();
+      retrieveRequests();
     })
     .catch((e) => {
       message.value = e.response.data.message;
     });
 };
 
-const retrieveTutorials = () => {
+const retrieveRequests = () => {
   studentServices.getAllForUser(user.userId)
     .then((response) => {
       student.value = response.data;
@@ -37,7 +37,7 @@ const retrieveTutorials = () => {
     });
 };
 
-retrieveTutorials();
+retrieveRequests();
 </script>
 
 <template>
@@ -50,16 +50,16 @@ retrieveTutorials();
       </v-toolbar>
       <br /><br />
       <v-card>
-        <v-card-title> Tutorials </v-card-title>
+        <v-card-title> Requests </v-card-title>
         <v-card-text>
           <b>{{ message }}</b>
         </v-card-text>
         <v-table>
           <thead>
             <tr>
-              <th class="text-left">Title</th>
-              <th class="text-left">Description</th>
-              <th class="text-left">Actions</th>
+              <th class="text-left">Student Name</th>
+              <th class="text-left">Last Name</th>
+              <th class="text-left">Student Id</th>
             </tr>
           </thead>
           <tbody>
@@ -67,13 +67,13 @@ retrieveTutorials();
               <td>{{ item.fName }}</td>
               <td>{{ item.lName }}</td>
               <td>
-                <v-icon small class="mx-4" @click="editTutorial(item)">
+                <v-icon small class="mx-4" @click="editRequest(item)">
                   mdi-pencil
                 </v-icon>
-                <v-icon small class="mx-4" @click="viewTutorial(item)">
+                <v-icon small class="mx-4" @click="viewRequest(item)">
                   mdi-format-list-bulleted-type
                 </v-icon>
-                <v-icon small class="mx-4" @click="deleteTutorial(item)">
+                <v-icon small class="mx-4" @click="deleteRequest(item)">
                   mdi-trash-can
                 </v-icon>
               </td>
