@@ -5,10 +5,7 @@ import Agreement from "./views/AgreementPage.vue";
 import AdminAccomList from "./views/AdminAccomList.vue";
 import ViewRequest from "./views/ViewRequest.vue";
 import Accommodations from "./views/AccommodationsBackground.vue";
-import studentRequest from "./views/studentRequest.vue";
 import request from "./views/newRequest.vue";
-
-
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -46,19 +43,12 @@ const router = createRouter({
       component: Accommodations,
     },
     {
-      path: "/student",
-      name: "student",
-      component: studentRequest,
-    },
-    {
       path: "/request",
       name: "request",
       component: request,
     },
     
-  ],
-    
-    
+  ],   
   
 });
 

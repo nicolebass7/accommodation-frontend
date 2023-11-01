@@ -52,7 +52,7 @@ async function saverequest() {
     .then((response) => {
       student.value.id = response.data.id;
       console.log("add " + response.data);
-      router.push({ name: "student" });
+      //router.push({ name: "student" });
     })
     .catch((e) => {
       message.value = e.response.data.message;
@@ -60,7 +60,7 @@ async function saverequest() {
 };
 
 const cancel = () => {
-  router.push({ name: "student" });
+  router.push({ name: "Accommodations Background" });
 };
 
 
