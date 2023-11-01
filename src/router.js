@@ -2,10 +2,8 @@ import { createRouter, createWebHistory } from "vue-router";
 
 import Login from "./views/Login.vue";
 import Agreement from "./views/AgreementPage.vue";
-
 import AdminAccomList from "./views/AdminAccomList.vue";
 import ViewRequest from "./views/ViewRequest.vue";
-
 import Accommodations from "./views/AccommodationsBackground.vue";
 
 
