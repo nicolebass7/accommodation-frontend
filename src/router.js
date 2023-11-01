@@ -2,6 +2,10 @@ import { createRouter, createWebHistory } from "vue-router";
 
 import Login from "./views/Login.vue";
 import Agreement from "./views/AgreementPage.vue";
+import AdminAccomList from "./views/AdminAccomList.vue";
+import ViewRequest from "./views/ViewRequest.vue";
+import Accommodations from "./views/AccommodationsBackground.vue";
+
 import request from "./views/newRequest.vue";
 
 
@@ -14,17 +18,30 @@ const router = createRouter({
       name: "login",
       component: Login,
     },
+
+    {
+      path: "/adminAccomList",
+      name: "AdminAccomList",
+      component: AdminAccomList,
+
+    },
+    {
+      path: "/viewRequest/:id",
+      name: "ViewRequest",
+      component: ViewRequest,
+      props: true,
+    },
+
+  
     {
       path: "/agreement",
       name: "agreement",
       component: Agreement,
     },
-    
-      
     {
-      path: "/request",
-      name: "request",
-      component: request,
+      path: "/AccommodationsBackground",
+      name: "Accommodations Background",
+      component: Accommodations,
     },
     
   ],
