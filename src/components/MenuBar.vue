@@ -43,7 +43,7 @@ onMounted(() => {
 <template>
   <div>
     <v-app-bar app>
-      <router-link :to="{ name: 'student' }">
+      <router-link :to="{ name: 'agreement' }">
         <v-img
           class="mx-2"
           :src="logoURL"
@@ -57,7 +57,6 @@ onMounted(() => {
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <div v-if="user">
-        <v-btn class="mx-2" :to="{ name: 'student' }"> List </v-btn>
         <v-btn class="mx-2" :to="{ name: 'request' }"> Make Request </v-btn>
         
       </div>
