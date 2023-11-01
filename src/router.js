@@ -6,7 +6,11 @@ import Academic from "./views/Academic.vue";
 import Chapel from "./views/Chapel.vue";
 import Housing from "./views/Housing.vue";
 import MealPlan from "./views/MealPlan.vue";
+
+import AdminAccomList from "./views/AdminAccomList.vue";
+import ViewRequest from "./views/ViewRequest.vue";
 import Accommodations from "./views/AccommodationsBackground.vue";
+
 
 
 const router = createRouter({
@@ -17,6 +21,18 @@ const router = createRouter({
       alias: "/login",
       name: "login",
       component: Login,
+    },
+    {
+      path: "/adminAccomList",
+      name: "AdminAccomList",
+      component: AdminAccomList,
+
+    },
+    {
+      path: "/viewRequest/:id",
+      name: "ViewRequest",
+      component: ViewRequest,
+      props: true,
     },
     {
       path: "/accommodation/academic",
