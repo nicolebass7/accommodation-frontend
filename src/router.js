@@ -25,10 +25,10 @@ const router = createRouter({
 
     },
     {
-      path: "/viewRequest",
+      path: "/viewRequest/:id",
       name: "ViewRequest",
       component: ViewRequest,
-
+      props: true,
     },
     {
       path: "/accommodation/academic",

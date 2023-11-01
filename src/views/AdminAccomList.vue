@@ -4,37 +4,105 @@ import { VContainer } from 'vuetify/lib/components';
 
 </style>
 <script setup>
-import RequestServices from "../services/requestServices";
-import { ref } from "vue";
+
+
+import { reactive, ref, onMounted } from "vue";
 import { useRouter} from "vue-router";
 import requestServices from "../services/requestServices";
+import studentServices from "../services/studentServices"
 
 const router = useRouter();
 const requests = ref([]);
 const message = ref("Requests");
 
+const studentNames = reactive(new Map()); 
 
 const viewRequest = (request) => {
-    router.push({name: "ViewRequst", params: { id: request.id}});
+    router.push({name: "ViewRequest", params: { id: request.id}});
 }
 const searchRequest = () => {
     
 }
 
-const retriveRequest = () => {
-    requestServices.getAll()
-    .then((response) =>{
+async function retrieveRequests () {
+    await requestServices.getAll()
+    .then(async (response) =>{
         requests.value = response.data;
-        console.log(requests.value);
+        requests.value.forEach(element => {
+            console.log("requests loop")
+            //retriveStudent(element.studentId);
+        });
+        console.log(requests);
     })
     .catch((e) => {
         message.value = e.response.data.message;
 
     });
 };
+async function retriveStudent (studentId) {
+        console.log(studentId);
+        await studentServices.get(studentId)
+        .then((response) =>{
+            let studentName = response.data.fName + " " + response.data.lName;
+            let id = response.data.id;
+            studentNames.set(id, studentName );
+            console.log(studentNames.get(id));
+        })
+        .catch((e) =>{
+            message.value = e.response.data.message;
+        })
+    
+}
+async function retriveStudents () {
+    console.log("3");
+    studentServices.getAll()
+    .then((response) =>{
+        console.log(response.data);
+        for(let n in response){
+            let studentName = n.fName + " " + n.lName;
+            console.log()
+            studentNames.set(n.id, studentName);
+            console.log(studentNames);
+        }
+    })
+    .catch((e) =>{
+        message.value = e.response.data.message;
+    })
+}
 
-retriveRequest();
+onMounted(async () => {
+    console.log("1")
+    retrieveRequests();
+    /*for(n in requests.value){
+        console.log('loop');
+        await retriveStudent(n.studentId);
+    }*/        
+});
 
+async function findStudentNameWID (studentId) { 
+        console.log("studentId=" + studentId);
+        studentServices.get(studentId)
+        .then((response) =>{
+            console.log(response.data);
+            let studentName = response.data.fName + " " + response.data.lName;
+            console.log(studentName);
+            return studentName;
+        })
+        .catch((e) =>{
+            message.value = e.response.data.message;
+        })
+    }
+async function findStudentNameFromMap(key) {
+        let sName = String;
+        sName = await studentNames.get(key);
+        console.log("name is "+ sName);
+        return sName;
+    }
+
+
+
+</script>
+<script>
 </script>
 <template>
     <v-container>
@@ -69,11 +137,31 @@ retriveRequest();
             height="320"
             item-height="48"
             >
-            <template v-for="(item) in requests" : key="item.title">
-                <v-list-item
-                :title="item.studentID">
-            
-            </v-list-item>
+            <template v-for="(item) in requests" : key="item.id">
+                
+                <v-card variant="outlined">
+                    <template v-slot:title>
+                        {{ item.studentId }}
+                        {{ retriveStudent(item.studentId).finally(findStudentNameFromMap(item.studentId)) }}
+                        
+                    </template>
+                    <template v-slot:subtitle>
+                        {{item.category}}
+                    </template>
+                    <template v-slot:text>
+                        {{item.status}}
+                        <v-divider></v-divider>
+                        
+                    </template>
+                    <v-card-actions>
+                        <v-btn
+                            prepend-icon = "mdi-check-circle"
+                            @click = "viewRequest(item)"
+                        >
+                        Review
+                        </v-btn>
+                    </v-card-actions>
+                </v-card>
                 
             
             </template>
