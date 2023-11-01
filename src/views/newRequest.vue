@@ -3,32 +3,52 @@ import { ref, onMounted } from "vue";
 import requestServices from "../services/requestServices";
 import Utils from "../config/utils.js";
 import { useRouter } from "vue-router";
+import studentServices from "../services/studentServices";
 
 const router = useRouter();
 const valid = ref(false);
 const user = Utils.getStore("user");
-const checkedNames = ref([]);
-const selected = ref('');
+const accommCat = ref([]);
+const semester = ref('');
+console.log('user', user.userId);
 
 const student = ref({
   id: null,
-  fName: "",
   lName: "",
+  fName: "",
   studentId: "",
-  greievances:"",
+  studentIdFK: "",
+  grievances:"",
+  semester:"",
+  accommCat: "",
 });
 
-const saverequest = () => {
-  const data = {
-    fName: student.value.fName,
-    lName: student.value.lName,
-    studentId: student.value.studentId,
-    grievances: student.value.grievances
-   
-    //userId: user.userId,
+async function getStudentInfo(){
+  await studentServices.getUserId(user.userId)
+  .then((response) => {
+    student.value.studentIdFK = response.data[0].id;
+    student.value.fName = response.data[0].fName;
+    student.value.lName = response.data[0].lName;
+    student.value.studentId = response.data[0].studentId;
+    console.log('student', response.data[0])
+    })
+    .catch((e) => {
+      message.value = e.response.data.message;
+    });
+}
 
+async function saverequest() {
+    const data = {
+    studentId: student.value.studentIdFK,
+    grievances: student.value.grievances,
+    semester: student.value.semester,
+    accommCat: student.value.accommCat,
   };
-  requestServices.create(data)
+
+    console.log('student', student)
+    console.log('data', data)
+
+  await requestServices.create(data)
     .then((response) => {
       student.value.id = response.data.id;
       console.log("add " + response.data);
@@ -58,6 +78,7 @@ function OnInput() {
 
 onMounted(() => {
   user.value = Utils.getStore("user");
+  getStudentInfo();
 });
 </script>
 
@@ -78,6 +99,7 @@ onMounted(() => {
           id="fName"
           :counter="50"
           label="First Name "
+          readonly
           required
         ></v-text-field>
         <v-text-field
@@ -95,30 +117,37 @@ onMounted(() => {
           required
         ></v-text-field> 
 
-        <div class="mainSelection">Selected: {{ selected }}</div>
+        <!-- <div class="mainSelection">Selected: {{ selected }}</div> -->
 
-<select v-model="selected">
+<select v-model="student.semester">
   <option disabled value="">Please select one</option>
   <option>2023FA</option>
   <option>2024SP</option>
  
 </select><br>
-
-   <input type="checkbox" id="Academic" value="Academic" v-model="checkedNames">
+<!-- <div class="checkboxes">
+   <input type="checkbox" id="Academic" value="Academic" v-model="student.accommCat">
     <label for="Academic">Academic</label> 
 
-    <input type="checkbox" id="Housing" value="Housing" v-model="checkedNames">
+    <input type="checkbox" id="Housing" value="Housing" v-model="student.accommCat">
     <label for="Housing">Housing</label>
 
-    <input type="checkbox" id="Meals" value="Meals" v-model="checkedNames">
+    <input type="checkbox" id="Meals" value="Meals" v-model="student.accommCat">
     <label for="Meals">Meals</label>
 
-    <input type="checkbox" id="Chapel" value="Chapel" v-model="checkedNames">
-    <label for="Chapel">Chapel</label><br>
+    <input type="checkbox" id="Chapel" value="Chapel" v-model="student.accommCat">
+    <label for="Chapel">Chapel</label></div> -->
+
+  <v-radio-group inline v-model="student.accommCat">
+  <v-radio label="Academic" value="academic" ></v-radio>
+  <v-radio label="Chapel" value="chapel" ></v-radio>
+  <v-radio label="Housing" value="housing" ></v-radio>
+   <v-radio label="Meals" value="meals " ></v-radio>
+</v-radio-group>
 
         <span>Requests:  </span>
-          <p>{{ greievances }}</p>
-          <textarea class= "wrap" id="grievances" v-model="grievances" placeholder="Type your grievances here..."></textarea>
+          <p>{{ grievances }}</p>
+          <textarea class= "wrap" id="grievances" v-model="student.grievances" placeholder="Type your grievances here..."></textarea>
         <br><br>
 
     
@@ -167,22 +196,38 @@ textarea {
     border-radius:25%;
 }
 
-.mainSelection {
-    overflow:hidden;
-    width:350px;
-    margin-left:35px;
-    background: url("/dropdown-arrow.png") no-repeat #fff 319px 2px;
-    /* dropdown_arrow.png is a 31x28 image */
-}
 
   select {
-    border: 0;
-    background:transparent;
-    height:32px;
-    border:3px solid #CCC;
-    width:175px;
-
+  background-color: white;
+  border: thin solid grey;
+  border-radius: 4px;
+  display: inline-block;
+  font: inherit;
+  line-height: 20px;
+  padding: 8px 56px 8px 16px;
+  background-image:
+    linear-gradient(45deg, transparent 50%, gray 50%),
+    linear-gradient(135deg, gray 50%, transparent 50%),
+    linear-gradient(to right, #ccc, #ccc);
+  background-position:
+    calc(100% - 20px) 16px,
+    calc(100% - 15px) 16px,
+    calc(100% - 40px) 8px;
+  background-size:
+    5px 5px,
+    5px 5px,
+    1px 24px;
+  background-repeat: no-repeat;
  
+}
+
+
+.checkboxes input{
+  margin: 0px 0px 0px 0px;
+}
+
+.checkboxes label{
+  margin: 0px 20px 0px 3px;
 }
 
 
