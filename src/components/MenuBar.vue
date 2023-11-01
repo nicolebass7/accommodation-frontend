@@ -63,9 +63,9 @@ onMounted(() => {
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <div v-if="user">
-        <v-btn class="mx-2" :to="{ name: 'Academic' }"> Home </v-btn>
+        <v-btn class="mx-2" :to="{ name: 'student' }"> Home </v-btn>
         <v-btn class="mx-2" :to="{ name: 'Accommodations Background' }"> About </v-btn>
-        <v-btn class="mx-2" :to="{ name: 'Academic' }"> Make Request </v-btn>
+        <v-btn class="mx-2" :to="{ name: 'student' }"> Make Request </v-btn>
       </div>
       <v-menu bottom min-width="200px" rounded offset-y v-if="user">
         <template v-slot:activator="{ props }">

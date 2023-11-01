@@ -18,7 +18,7 @@ const props = defineProps({
 });
 
 const nextPage = () => {
-    router.push({ name: "tutorials" });
+    router.push({ name: "Accommodations Background" });
 };
     
 </script>
