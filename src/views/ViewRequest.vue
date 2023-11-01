@@ -65,7 +65,11 @@ onMounted(async () => {
             <div>{{ Request.status }}</div>
         </v-card-text>
     </v-card>
-</template>
-<template>
-    
+    <v-card>
+        <v-btn>Accept Accomodation</v-btn>
+        <v-btn
+        @click="rejectOverlay = !rejectOverlay"
+        >Reject Accomodation</v-btn>
+        <v-overlay v-model="rejectOverlay"></v-overlay>
+    </v-card>   
 </template>
