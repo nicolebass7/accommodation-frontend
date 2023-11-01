@@ -3,7 +3,7 @@
 <style scoped>
 textarea {
     white-space:pre-line;
-    width:800 px;
+    width:900 px;
     height:150px;
     border:3px solid #CCC;
     border-radius: 4px;
@@ -22,13 +22,46 @@ textarea {
         <v-toolbar-title>Academic Accommodations</v-toolbar-title>
         <br /><br />
         <p>
-            This is the page to request an academic accommodation
-        </p>
-         <p>
-            Please specify below your reasons for requesting an academic accomodation:
-        </p>
+            Please complete the form below to request an academic accomodation
+        </p> 
         <v-form>
-            <textarea v-model="message" class="textarea" placeholder="Enter reasons here"></textarea>
+            <v-container>
+                <v-row>
+                    <v-col
+                      cols="12"
+                        sm="6"
+                    >
+                    <v-text-field
+                        v-model = "Class"
+                        label = "Class"
+                        hint = "What class are you requesting an accommodation for (For example: CMSC-1000-01)">
+                    </v-text-field>
+
+                    </v-col>
+                    <v-col
+                      cols="12"
+                        sm="6"
+                    >
+                    <v-text-field
+                        v-model = "Disability"
+                        label = "Disabilitiy"
+                        hint = "">
+                    </v-text-field>
+                    
+                    </v-col>
+                    <v-col
+                      cols="12"
+                        sm="6"
+                    >
+                    <textarea 
+                        v-model="message"
+                        class="textarea"
+                        placeholder="">
+                    </textarea>
+                    </v-col>
+                </v-row>
+                
+            </v-container>
         </v-form>
         <v-btn  @click="">Submit</v-btn>
     </v-container>
