@@ -17,7 +17,7 @@ const message = ref("Requests");
 const studentNames = reactive(new Map()); 
 
 const viewRequest = (request) => {
-    router.push({name: "ViewRequest", params: { id: request.id}});
+    router.push({name: "viewRequest", params: { id: request.id}});
 }
 const searchRequest = () => {
     
