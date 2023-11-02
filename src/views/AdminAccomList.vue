@@ -25,12 +25,12 @@ const searchRequest = () => {
 }
 
 async function retrieveRequests () {
-    await requestServices.getAll()
+    requestServices.getAll()
     .then(async (response) =>{
         requests.value = response.data;
-        requests.value.forEach(element => {
-            console.log("requests loop")
-            //retriveStudent(element.studentId);
+        requests.value.forEach(async element => {
+            console.log("requests loop");
+            await retriveStudent(element.studentId);
         });
         console.log(requests);
     })
@@ -96,6 +96,7 @@ async function findStudentNameFromMap(key) {
         let sName = String;
         sName = await studentNames.get(key);
         console.log("name is "+ sName);
+        setTimeout(() => document.getElementById().innerHTML = "Test");
         return sName;
     }
 
@@ -103,6 +104,7 @@ async function findStudentNameFromMap(key) {
 
 </script>
 <script>
+
 </script>
 <template>
     <v-container>
@@ -141,8 +143,7 @@ async function findStudentNameFromMap(key) {
                 
                 <v-card variant="outlined">
                     <template v-slot:title>
-                        {{ item.studentId }}
-                        {{ retriveStudent(item.studentId).finally(findStudentNameFromMap(item.studentId)) }}
+                    <p id=item.id>{{ findStudentNameFromMap() }}</p>
                         
                     </template>
                     <template v-slot:subtitle>
