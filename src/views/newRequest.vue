@@ -52,7 +52,7 @@ async function saverequest() {
     .then((response) => {
       student.value.id = response.data.id;
       console.log("add " + response.data);
-      //router.push({ name: "student" });
+      router.push({ name: "Accommodations Background" });
     })
     .catch((e) => {
       message.value = e.response.data.message;
