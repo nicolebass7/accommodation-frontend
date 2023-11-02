@@ -45,9 +45,8 @@ onMounted(() => {
     <v-app-bar app>
 
       <router-link :to="{ name: 'Accommodations Background' }">
-
-      <router-link :to="{ name: 'agreement' }">
-
+      
+      
         <v-img
           class="mx-2"
           :src="logoURL"
@@ -55,6 +54,8 @@ onMounted(() => {
           width="50"
           contain
         ></v-img>
+      </router-link>
+      <router-link :to="{ name: 'agreement' }">
       </router-link>
       <v-toolbar-title class="title">
         {{ title }}
@@ -64,7 +65,6 @@ onMounted(() => {
 
         <v-btn class="mx-2" :to="{ name: 'Accommodations Background' }"> Home </v-btn>
         <v-btn class="mx-2" :to="{ name: 'Accommodations Background' }"> About </v-btn>
-        <v-btn class="mx-2" :to="{ name: 'Accommodations Background' }"> Make Request </v-btn>
         <v-btn class="mx-2" :to="{ name: 'request' }"> Make Request </v-btn>
         
 
