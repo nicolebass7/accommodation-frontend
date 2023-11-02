@@ -8,10 +8,6 @@ const router = useRouter();
 const tutorials = ref([]);
 const user = Utils.getStore("user");
 const text = ref("There are four main categories of accommodations here at OC! The categories for accommodations are Chapel, Meal plan, Academic, and Housing.");
-const text8 = ref("")
-const text9 = ref("")
-const text10 = ref("")
-
 </script>
 
 <template>
