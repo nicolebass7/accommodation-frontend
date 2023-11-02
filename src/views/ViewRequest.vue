@@ -16,7 +16,7 @@ const props = defineProps({
 });
 
 const requests = () => {
-    router.push({name: "AdminAccomList"});
+    router.push({name: "adminAccomList"});
 }
 const retriveStudentName = () => {
     studentServices.get(Request.value.studentId)
@@ -36,7 +36,7 @@ const rejectRequest = async () => {
     console.log(data);
     await requestServices.update(props.id, data)
     .then(() => {
-        router.push({ name: "AdminAccomList" });
+        router.push({ name: "adminAccomList" });
     })
     .catch((e) => {
       message.value = e.response.data.message;
