@@ -43,7 +43,7 @@ onMounted(() => {
 <template>
   <div>
     <v-app-bar app>
-      <router-link :to="{ name: 'Academic' }">
+      <router-link :to="{ name: 'agreement' }">
         <v-img
           class="mx-2"
           :src="logoURL"
@@ -52,20 +52,13 @@ onMounted(() => {
           contain
         ></v-img>
       </router-link>
-      <router-link :to="{ name: 'Accommodations Background' }">
-        <v-img
-          class="mx-2"
-          
-        ></v-img>
-      </router-link>
       <v-toolbar-title class="title">
         {{ title }}
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <div v-if="user">
-        <v-btn class="mx-2" :to="{ name: 'Academic' }"> Home </v-btn>
-        <v-btn class="mx-2" :to="{ name: 'Accommodations Background' }"> About </v-btn>
-        <v-btn class="mx-2" :to="{ name: 'Academic' }"> Make Request </v-btn>
+        <v-btn class="mx-2" :to="{ name: 'request' }"> Make Request </v-btn>
+        
       </div>
       <v-menu bottom min-width="200px" rounded offset-y v-if="user">
         <template v-slot:activator="{ props }">
