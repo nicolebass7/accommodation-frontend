@@ -18,7 +18,7 @@ const router = createRouter({
 
     
     {
-      path: "/request",
+      path: "/request:id",
       name: "request",
       component: newRequest,
       props: true,
