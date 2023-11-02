@@ -45,8 +45,6 @@ onMounted(() => {
     <v-app-bar app>
 
       <router-link :to="{ name: 'Accommodations Background' }">
-      
-      
         <v-img
           class="mx-2"
           :src="logoURL"
@@ -55,8 +53,7 @@ onMounted(() => {
           contain
         ></v-img>
       </router-link>
-      <router-link :to="{ name: 'agreement' }">
-      </router-link>
+     
       <v-toolbar-title class="title">
         {{ title }}
       </v-toolbar-title>
