@@ -38,16 +38,17 @@ const handleCredentialResponse = async (response) => {
     .then((response) => {
       user.value = response.data;
       Utils.setStore("user", user.value);
-      console.log('user',user);
       fName.value = user.value.fName;
       lName.value = user.value.lName;
       roleType.value = user.value.roleType;
 
-      if(roleType == "student") {
+      console.log("roleType: ",roleType.value);
+
+      if(roleType.value == "student") {
         router.push({ name: "agreement" });
       } 
-      if(roleType == "admin") {
-        router.push({ name: "AdminAccomList"})
+      if(roleType.value == "admin") {
+        router.push({ name: "adminAccomList"})
       }
       
     })
