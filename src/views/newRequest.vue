@@ -5,13 +5,9 @@ import Utils from "../config/utils.js";
 import { useRouter } from "vue-router";
 import studentServices from "../services/studentServices";
 
-
-
 const router = useRouter();
 const valid = ref(false);
 const user = Utils.getStore("user");
-//const accommCat = ref([]);
-//const semester = ref('');
 console.log('user', user.userId);
 
 const student = ref({
