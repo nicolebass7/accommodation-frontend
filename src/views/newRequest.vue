@@ -5,11 +5,13 @@ import Utils from "../config/utils.js";
 import { useRouter } from "vue-router";
 import studentServices from "../services/studentServices";
 
+
+
 const router = useRouter();
 const valid = ref(false);
 const user = Utils.getStore("user");
-const accommCat = ref([]);
-const semester = ref('');
+//const accommCat = ref([]);
+//const semester = ref('');
 console.log('user', user.userId);
 
 const student = ref({
@@ -52,15 +54,17 @@ async function saverequest() {
     .then((response) => {
       student.value.id = response.data.id;
       console.log("add " + response.data);
-      router.push({ name: "Accommodations Background" });
+      router.push({name: "Accommodations Background"})
+      
     })
     .catch((e) => {
       message.value = e.response.data.message;
     });
 };
 
+
 const cancel = () => {
-  router.push({ name: "Accommodations Background" });
+  router.push({ name: "agreement" });
 };
 
 
@@ -220,7 +224,6 @@ textarea {
   background-repeat: no-repeat;
  
 }
-
 
 .checkboxes input{
   margin: 0px 0px 0px 0px;

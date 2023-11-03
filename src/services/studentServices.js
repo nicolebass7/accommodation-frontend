@@ -1,4 +1,3 @@
-import authServices from "./authServices.js";
 import apiClient from "./services.js";
 
 export default {
