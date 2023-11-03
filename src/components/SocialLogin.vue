@@ -37,7 +37,6 @@ const handleCredentialResponse = async (response) => {
   await AuthServices.loginUser(token)
     .then((response) => {
       user.value = response.data;
-      
       Utils.setStore("user", user.value);
       console.log('user',user);
       fName.value = user.value.fName;
