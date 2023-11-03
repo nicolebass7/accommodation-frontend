@@ -64,7 +64,7 @@ async function saverequest() {
 
 
 const cancel = () => {
-  router.push({ name: "agreement" });
+  router.push({ name: "Accommodations Background" });
 };
 
 
@@ -111,6 +111,7 @@ onMounted(() => {
           id="lName"
           :counter="50"
           label="Last Name "
+          readonly
           required
         ></v-text-field>
         <v-text-field
@@ -118,10 +119,10 @@ onMounted(() => {
           id="studentId"
           :counter="7"
           label="Student ID"
+          readonly
           required
         ></v-text-field> 
 
-        <!-- <div class="mainSelection">Selected: {{ selected }}</div> -->
 
 <select v-model="student.semester">
   <option disabled value="">Please select one</option>
@@ -129,18 +130,7 @@ onMounted(() => {
   <option>2024SP</option>
  
 </select><br>
-<!-- <div class="checkboxes">
-   <input type="checkbox" id="Academic" value="Academic" v-model="student.accommCat">
-    <label for="Academic">Academic</label> 
 
-    <input type="checkbox" id="Housing" value="Housing" v-model="student.accommCat">
-    <label for="Housing">Housing</label>
-
-    <input type="checkbox" id="Meals" value="Meals" v-model="student.accommCat">
-    <label for="Meals">Meals</label>
-
-    <input type="checkbox" id="Chapel" value="Chapel" v-model="student.accommCat">
-    <label for="Chapel">Chapel</label></div> -->
 
   <v-radio-group inline v-model="student.accommCat">
   <v-radio label="Academic" value="academic" ></v-radio>
@@ -225,13 +215,7 @@ textarea {
  
 }
 
-.checkboxes input{
-  margin: 0px 0px 0px 0px;
-}
 
-.checkboxes label{
-  margin: 0px 20px 0px 3px;
-}
 
 
 </style>
