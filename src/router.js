@@ -40,6 +40,7 @@ const router = createRouter({
       path: "/agreement",
       name: "agreement",
       component: Agreement,
+      
     },
     {
       path: "/AccommodationsBackground",
@@ -47,9 +48,7 @@ const router = createRouter({
       component: Accommodations,
     },
     
-  ],
-    
-    
+  ],   
   
 });
 
