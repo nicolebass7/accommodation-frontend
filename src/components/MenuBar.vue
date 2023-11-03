@@ -60,7 +60,6 @@ onMounted(() => {
       <v-spacer></v-spacer>
       <div v-if="user">
 
-        <v-btn class="mx-2" :to="{ name: 'Accommodations Background' }"> Home </v-btn>
         <v-btn class="mx-2" :to="{ name: 'Accommodations Background' }"> About </v-btn>
         <v-btn class="mx-2" :to="{ name: 'request' }"> Make Request </v-btn>
         
@@ -94,4 +93,7 @@ onMounted(() => {
       </v-menu>
     </v-app-bar>
   </div>
+  
+  
+  
 </template>
