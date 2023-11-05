@@ -24,7 +24,7 @@ const router = createRouter({
       component: AdminAccomList,
     },
     {
-      path: "/viewRequest",
+      path: "/viewRequest:id",
       name: "viewRequest",
       component: ViewRequest,
       props: true,
