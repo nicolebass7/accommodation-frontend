@@ -19,8 +19,8 @@ const student = ref({
   grievances:"",
   semester:"",
   accommCat: "",
+  status: "pending"
 });
-
 async function getStudentInfo(){
   await studentServices.getUserId(user.userId)
   .then((response) => {
@@ -41,6 +41,8 @@ async function saverequest() {
     grievances: student.value.grievances,
     semester: student.value.semester,
     accommCat: student.value.accommCat,
+    status: student.value.status
+
   };
 
     console.log('student', student)
