@@ -11,6 +11,11 @@ loadFonts();
 import "vuetify/styles";
 import "@mdi/font/css/materialdesignicons.css";
 
+// Icons
+import 'material-design-icons-iconfont/dist/material-design-icons.css'
+import { aliases, md } from 'vuetify/iconsets/md'
+
+
 const myCustomLightTheme = {
   dark: false,
   colors: {
@@ -35,6 +40,10 @@ const vuetify = createVuetify({
   },
   icons: {
     defaultSet: "mdi",
+    aliases,
+    sets: {
+      md,
+    },
   },
 });
 

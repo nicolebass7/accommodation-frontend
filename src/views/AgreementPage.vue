@@ -43,12 +43,12 @@ const nextPage = () => {
           id="checkbox-1"
           type="checkbox"
           v-model="agreement"
-          class="field"
+          
           />
-          <label> I agree </label>
+          <label for="checkbox-1"> I agree </label>
           
           <br /><br />
-          <v-btn color="success" class="mr-4" @click="nextPage"> Continue </v-btn>
+          <v-btn id="button" color="success" class="mr-4" @click="nextPage"> Continue </v-btn>
 
         </div>
       </v-card>

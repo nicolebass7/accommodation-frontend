@@ -12,24 +12,57 @@ import studentServices from "../services/studentServices"
 
 const router = useRouter();
 const requests = ref([]);
+const displayedRequests = ref([]);
 const message = ref("Requests");
-
-const studentNames = reactive(new Map()); 
+const studentNames = reactive(new Map());
+const keyword = ref("");
+const snackbar = ref(false); 
 
 const viewRequest = (request) => {
     router.push({name: "viewRequest", params: { id: request.id}});
 }
-const searchRequest = () => {
-    
+function searchRequest() {
+    displayedRequests.value = [];
+    requests.value.forEach(request =>{
+        console.log(keyword);
+        if(keyword.value == request.studentId){
+            console.log(request);
+            displayedRequests.value.push(request);
+            console.log(displayedRequests.value);
+            
+            }
+        
+    })
+    let nameRet = searchStudentName(keyword);
+    if(nameRet.length != 0){
+        nameRet.forEach(id =>{
+            requests.value.forEach(request =>{
+            if(id == request.studentId){
+                console.log(request);
+                displayedRequests.value.push(request);
+                console.log(displayedRequests.value);
+                
+                }
+            })
+        
+    })
+    }
+    if(displayedRequests.value.length == 0){
+        displayedRequests.value = requests.value;
+        snackbar.value = true;
+    }
 }
+    
+
 
 async function retrieveRequests () {
     requestServices.getAll()
     .then(async (response) =>{
         requests.value = response.data;
+        displayedRequests.value = response.data;
         requests.value.forEach(async element => {
             console.log("requests loop");
-            await retriveStudent(element.studentId);
+            retriveStudent(element.studentId);
         });
         console.log(requests);
     })
@@ -40,7 +73,7 @@ async function retrieveRequests () {
 };
 async function retriveStudent (studentId) {
         console.log(studentId);
-        await studentServices.get(studentId)
+        studentServices.get(studentId)
         .then((response) =>{
             let studentName = response.data.fName + " " + response.data.lName;
             let id = response.data.id;
@@ -51,61 +84,38 @@ async function retriveStudent (studentId) {
             message.value = e.response.data.message;
         })
     
-}
-async function retriveStudents () {
-    console.log("3");
-    studentServices.getAll()
-    .then((response) =>{
-        console.log(response.data);
-        for(let n in response){
-            let studentName = n.fName + " " + n.lName;
-            console.log()
-            studentNames.set(n.id, studentName);
-            console.log(studentNames);
+};
+function searchStudentName (search) {
+    console.log(search);
+    let returnArr = [];
+    for(let [key, value] of studentNames.entries()){
+        if(value.toLowerCase().includes(search.value.toLowerCase())){
+            returnArr.push(key);
         }
-    })
-    .catch((e) =>{
-        message.value = e.response.data.message;
-    })
+    }
+    return returnArr;
 }
 
 onMounted(async () => {
     console.log("1")
-    retrieveRequests();
-    /*for(n in requests.value){
-        console.log('loop');
-        await retriveStudent(n.studentId);
-    }*/        
+    await retrieveRequests();       
 });
-
-async function findStudentNameWID (studentId) { 
-        console.log("studentId=" + studentId);
-        studentServices.get(studentId)
-        .then((response) =>{
-            console.log(response.data);
-            let studentName = response.data.fName + " " + response.data.lName;
-            console.log(studentName);
-            return studentName;
-        })
-        .catch((e) =>{
-            message.value = e.response.data.message;
-        })
-    }
-async function findStudentNameFromMap(key) {
-        let sName = String;
-        sName = await studentNames.get(key);
-        console.log("name is "+ sName);
-        setTimeout(() => document.getElementById().innerHTML = "Test");
-        return sName;
-    }
-
-
 
 </script>
 <script>
-
 </script>
 <template>
+    <v-snackbar v-model="snackbar">
+        No results for {{ keyword }}
+        <template v-slot:actions>
+            <v-btn
+            color = "red"
+            variant = "text"
+            @click = "snackbar = false">
+            Close
+            </v-btn>
+        </template>
+    </v-snackbar>
     <v-container>
         <v-card
             class="mx-auto"
@@ -127,46 +137,38 @@ async function findStudentNameFromMap(key) {
                     density="compact"
                     hide-details
                     single-line
+                    @click:prepend-inner="searchRequest()"
+                    v-on:keyup.enter="searchRequest()"
                 >
             </v-text-field>
             </v-toolbar>
             <v-card-text>
                 <b>{{ message }}</b> 
             </v-card-text>        
-            <v-virtual-scroll
-            :items="items"
-            height="320"
-            item-height="48"
-            >
-            <template v-for="(item) in requests" : key="item.id">
+            
+            <template v-for="(request) in displayedRequests" : key="request.id">
                 
                 <v-card variant="outlined">
-                    <template v-slot:title>
-                    <p id=item.id>{{ findStudentNameFromMap() }}</p>
-                        
+                    <template v-slot:title >
+                        <p v-text=studentNames.get(request.studentId)></p>
                     </template>
                     <template v-slot:subtitle>
-                        {{item.category}}
+                        {{request.category}}
                     </template>
                     <template v-slot:text>
-                        {{item.status}}
+                        {{request.status}}
                         <v-divider></v-divider>
                         
                     </template>
                     <v-card-actions>
-                        <v-btn
-                            prepend-icon = "mdi-check-circle"
-                            @click = "viewRequest(item)"
+                        <v-btn @click = "viewRequest(request)"
+                        prepend-icon = "md:checklist"
                         >
                         Review
-                        </v-btn>
+                    </v-btn>
                     </v-card-actions>
                 </v-card>
-                
-            
-            </template>
-
-            </v-virtual-scroll>
+                </template>
         </v-card>
     </v-container>
 </template>

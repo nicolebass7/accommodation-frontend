@@ -30,7 +30,8 @@ const retriveStudentName = () => {
 
 const rejectRequest = async () => {
     const data = {
-        status: "Rejected",
+        status: "rejected",
+        comments: Request.value.comments 
     };
     console.log(props.id);
     console.log(data);
@@ -119,10 +120,14 @@ onMounted(async () => {
             >
                 <v-container>
                 <v-textarea
+                    v-model="Request.comments"
+                    label="Comments"
+                    id="comments"
                     :height="500"
                     :width="800"
                     no-resize
                     variant="outlined"
+                    
                     placeholder="Enter reasons for rejection here">
                 </v-textarea>
                 </v-container>

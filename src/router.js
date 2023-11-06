@@ -24,7 +24,7 @@ const router = createRouter({
       component: AdminAccomList,
     },
     {
-      path: "/viewRequest",
+      path: "/viewRequest:id",
       name: "viewRequest",
       component: ViewRequest,
       props: true,
@@ -40,6 +40,7 @@ const router = createRouter({
       path: "/agreement",
       name: "agreement",
       component: Agreement,
+      
     },
     {
       path: "/AccommodationsBackground",
@@ -47,9 +48,7 @@ const router = createRouter({
       component: Accommodations,
     },
     
-  ],
-    
-    
+  ],   
   
 });
 
