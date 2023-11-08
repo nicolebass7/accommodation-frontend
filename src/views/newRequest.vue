@@ -18,7 +18,7 @@ const student = ref({
   studentIdFK: "",
   grievances:"",
   semester:"",
-  accommCat: "",
+  category: "",
   status: "pending"
 });
 async function getStudentInfo(){
@@ -40,7 +40,7 @@ async function saverequest() {
     studentId: student.value.studentIdFK,
     grievances: student.value.grievances,
     semester: student.value.semester,
-    accommCat: student.value.accommCat,
+    category: student.value.category,
     status: student.value.status
 
   };
@@ -129,7 +129,7 @@ onMounted(() => {
  
 </select><br>
 
-  <v-radio-group inline v-model="student.accommCat">
+  <v-radio-group inline v-model="student.category">
   <v-radio label="Academic" value="academic" ></v-radio>
   <v-radio label="Chapel" value="chapel" ></v-radio>
   <v-radio label="Housing" value="housing" ></v-radio>
