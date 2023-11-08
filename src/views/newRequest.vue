@@ -129,7 +129,6 @@ onMounted(() => {
  
 </select><br>
 
-
   <v-radio-group inline v-model="student.accommCat">
   <v-radio label="Academic" value="academic" ></v-radio>
   <v-radio label="Chapel" value="chapel" ></v-radio>
