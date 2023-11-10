@@ -1,4 +1,5 @@
 import { VContainer } from 'vuetify/lib/components';
+
 <style scoped>
 
 </style>
@@ -25,8 +26,8 @@ const viewRequest = (request) => {
 function searchRequest() {
     displayedRequests.value = [];
     rejectedRequests.value = [];
+    console.log("Search keyword is " + keyword.value);
     requests.value.forEach(request =>{
-        console.log("Search keyword is" + keyword);
         if(keyword.value == request.studentId){
             if(request.status != "rejected"){
                 displayedRequests.value.push(request);
@@ -35,6 +36,14 @@ function searchRequest() {
                 rejectedRequests.value.push(request);
             }
         }
+        /*if(keyword.value == request.category){
+            if(request.status != "rejected"){
+                displayedRequests.value.push(request);
+            }
+            else{
+                rejectedRequests.value.push(request);
+            }
+        }*/
         
     })
     let nameRet = searchStudentName(keyword);
@@ -183,7 +192,7 @@ onMounted(async () => {
                     </template>
                     <v-card-actions>
                         <v-btn @click = "viewRequest(request)"
-                        prepend-icon = "md:checklist"
+                        prepend-icon = "mdi-pencil"
                         >
                         Review
                     </v-btn>
@@ -212,7 +221,7 @@ onMounted(async () => {
                     </template>
                     <v-card-actions>
                         <v-btn @click = "viewRequest(request)"
-                        prepend-icon = "md:checklist"
+                        prepend-icon = "mdiClipboard"
                         >
                         Review
                     </v-btn>

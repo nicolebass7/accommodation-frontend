@@ -16,8 +16,8 @@ export default{
     update(id, data){
         return apiClient.put(`accommodationRequests/${id}`, data);
     },
-    delete(id){
-        return apiClient.delete(`accommodationRequests/${id}`);
+    delete(requestId, accommodationId){
+        return apiClient.delete("accommodationRequests/" + requestId +"/" + accommodationId);
     },
     deleteAll(){
         return apiClient.delete("accommodationRequests");

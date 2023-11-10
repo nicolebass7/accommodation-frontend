@@ -5,7 +5,6 @@ import studentServices from "../services/studentServices";
 import accommodationRequestServices from "../services/accommodationRequestServices";
 import accommodationServices from "../services/accommodationServices";
 import { useRouter } from "vue-router";
-import AccommodationsBackground from "./AccommodationsBackground.vue";
 
 
 const router = useRouter();
@@ -33,25 +32,34 @@ const retriveStudentName = () => {
             message.value = e.response.data.message;
         })
 }
-const acceptRequest = async () =>{
-    console.log("accom", selectedAccommodations)
 
-    selectedAccommodations.value.forEach(accommodation =>{
-        const data = {
+async function removeAccommocations(i, item){
+    selectedAccommodations.value.splice(i, 1)
+    accommodationRequestServices.delete(props.id, item.id)
+    .then(() => {
+            console.log("removed")
+        })
+    .catch((e) => {
+        message.value = e.response.data.message;
+    });
+}
+async function saveAccommodation(item){
+      const data = {
             requestId: props.id,
-            accommodationId: accommodation.id,
+            accommodationId: item.id,
         };
         console.log(props.id)
         console.log(data)
         accommodationRequestServices.create(data)
         .then(() => {
-            console.log("accepted")
-            //router.push({ name: "adminAccomList" });
+            console.log("saved")
         })
         .catch((e) => {
             message.value = e.response.data.message;
         });
-    })
+}
+const acceptRequest = async () =>{
+    console.log("accom", selectedAccommodations)
     const requestData ={
         status: "accepted",
     }
@@ -99,7 +107,7 @@ async function retrieveSelectedAccommodations(){
     .then((response) => {
         response.data.forEach(element =>  {
             Accommodations.value.forEach(accommodation =>{
-                console.log(accommodation.id + " ==" + element.accommodationId);
+                console.log(accommodation.id + "==" + element.accommodationId);
                 if(accommodation.id == element.accommodationId){
                     console.log(accommodation);
                     selectedAccommodations.value.push(accommodation);
@@ -115,9 +123,10 @@ async function retrieveSelectedAccommodations(){
         message.value = e.response.data.message;
     })
 }
-async function retrieveAccommodations(){
+async function retrieveAccommodations(requestcategory){
+    console.log(requestcategory);
     if(Request.category != null){
-        await accommodationServices.getAllForCategory(Request.category)
+        await accommodationServices.getAllForCategory(requestcategory)
         .then((response) => {
             Accommodations.value = response.data;
             displayedAccommodations.value = response.data;
@@ -141,10 +150,14 @@ async function retrieveAccommodations(){
     }
 
 }
+function addAccommodation(item){
+    selectedAccommodations.value.push(item);
+    saveAccommodation(item);
+}
 
 onMounted(async () => {
   await retrieveRequest();
-  await retrieveAccommodations();
+  await retrieveAccommodations(Request.category);
   retriveStudentName();
    
 });
@@ -211,7 +224,7 @@ onMounted(async () => {
             density="defualt"
             elevation="3"
             class="pa-2"
-            @click:close="selectedAccommodations.splice(i, 1)"
+            @click:close="removeAccommocations(i, accommodation)"
             close-icon="mdi-close"
             >
                 {{ accommodation.name }}
@@ -232,7 +245,7 @@ onMounted(async () => {
                 v-if="!selectedAccommodations.includes(item)"
                 :key="item.id"
                 :disabled="loading"
-                @click="selectedAccommodations.push(item)"
+                @click="addAccommodation(item)"
                 >
                 <v-list-item-title><h3  v-text="item.name"></h3></v-list-item-title>
                 <v-list-item-text><p v-text="item.request"></p></v-list-item-text>
