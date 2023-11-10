@@ -2,6 +2,7 @@
 import {ref, onMounted} from "vue";
 import requestServices from '../services/requestServices';
 import studentServices from "../services/studentServices";
+import accommodationRequestServices from "../services/accommodationRequestServices";
 import accommodationServices from "../services/accommodationServices";
 import { useRouter } from "vue-router";
 import AccommodationsBackground from "./AccommodationsBackground.vue";
@@ -33,20 +34,38 @@ const retriveStudentName = () => {
         })
 }
 const acceptRequest = async () =>{
-    const data = {
+    console.log("accom", selectedAccommodations)
+
+    selectedAccommodations.value.forEach(accommodation =>{
+        const data = {
+            requestId: 1,
+            accommodationId: accommodation.id,
+        };
+        console.log(props.id)
+        console.log(data)
+        accommodationRequestServices.create(data)
+        .then(() => {
+            console.log("accepted")
+            //router.push({ name: "adminAccomList" });
+        })
+        .catch((e) => {
+            message.value = e.response.data.message;
+        });
+    })
+    const requestData ={
         status: "accepted",
-        accomodations: selectedAccommodations,
-    };
-    console.log(props.id)
-    console.log(data)
-    await requestServices.update(props.id, data)
+    }
+    await requestServices.update(props.id, requestData)
     .then(() => {
+        console.log(props.id);
         router.push({ name: "adminAccomList" });
     })
     .catch((e) => {
       message.value = e.response.data.message;
     });
 }
+    
+
 
 const rejectRequest = async () => {
     const data = {
@@ -74,34 +93,59 @@ async function retrieveRequest(){
   });
 };
 
-function filterAccommodations(){
-    displayedAccommodations.value = [];
-    Accommodations.value.forEach(accomodation =>{
-        if(Request.value.category != null){
-            if(Request.value.category == accomodation.category){
-                displayedAccommodations.value.push(accomodation);
-            }
-        } else{
-            displayedAccommodations.value = Accommodations.value;
-        }
-    })
-}
-async function retrieveAccommodations(){
-    await accommodationServices.getAll()
+
+async function retrieveSelectedAccommodations(){
+    await accommodationRequestServices.getAllForRequest(props.id)
     .then((response) => {
-        Accommodations.value = response.data;
-        displayedAccommodations.value = response.data;
+        response.data.forEach(element =>  {
+            Accommodations.value.forEach(accommodation =>{
+                console.log(accommodation.id + " ==" + element.accommodationId);
+                if(accommodation.id == element.accommodationId){
+                    console.log(accommodation);
+                    selectedAccommodations.value.push(accommodation);
+                    console.log("here");
+                    console.log(selectedAccommodations)
+                }
+            })
+
+        })
+
     })
     .catch((e) => {
         message.value = e.response.data.message;
     })
+}
+async function retrieveAccommodations(){
+    if(Request.category != null){
+        await accommodationServices.getAllForCategory(Request.category)
+        .then((response) => {
+            Accommodations.value = response.data;
+            displayedAccommodations.value = response.data;
+            retrieveSelectedAccommodations();
+
+        })
+        .catch((e) => {
+            message.value = e.response.data.message;
+        })
+    }else{
+        await accommodationServices.getAll()
+        .then((response) => {
+            Accommodations.value = response.data;
+            displayedAccommodations.value = response.data;
+            retrieveSelectedAccommodations();
+
+        })
+        .catch((e) => {
+            message.value = e.response.data.message;
+        })
+    }
+
 }
 
 onMounted(async () => {
   await retrieveRequest();
   await retrieveAccommodations();
   retriveStudentName();
-  filterAccommodations();
    
 });
 </script>
@@ -134,6 +178,8 @@ onMounted(async () => {
                 {{ Request.category }} Request
             </p>
             <p class="text-subtitle-1 font-italic">{{ Request.status }}</p>
+            <v-spacer></v-spacer>
+            <p class="text-subtitle-1">{{ Request.semester }}</p>
             <v-divider></v-divider>
             <p class = "text-h5"> Student States:</p>
             <div>{{ Request.grievances }}</div>
@@ -144,7 +190,7 @@ onMounted(async () => {
     align="center"
     >
     <v-card
-    width = "700"
+    width = "500"
     min-height="50"
     class="mx-auto"
     color="#801529"
@@ -157,14 +203,14 @@ onMounted(async () => {
             v-for="(accommodation, i) in selectedAccommodations" 
             :key = "accommodation.id"
             cols="auto"
-            class="ma-2 py-1 pe-0 "
+            class="mx-1 pe-1 mb-1"
         >
             <v-chip
             :disabled="loading"
             closable
             density="defualt"
             elevation="3"
-            color=""
+            class="pa-2"
             @click:close="selectedAccommodations.splice(i, 1)"
             close-icon="mdi-close"
             >
@@ -176,7 +222,7 @@ onMounted(async () => {
 <v-spacer></v-spacer>
 
     <v-card
-    width = "700"
+    width = "500"
     align="center"
     justify = "start"
     >
