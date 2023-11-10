@@ -95,6 +95,7 @@ async function retrieveRequest(){
   .then((response) => {
     Request.value = response.data;
     console.log(Request.value);
+    retrieveAccommodations(response.data.category);
   })
   .catch((e) => {
     message.value = e.response.data.message;
@@ -107,12 +108,10 @@ async function retrieveSelectedAccommodations(){
     .then((response) => {
         response.data.forEach(element =>  {
             Accommodations.value.forEach(accommodation =>{
-                console.log(accommodation.id + "==" + element.accommodationId);
                 if(accommodation.id == element.accommodationId){
-                    console.log(accommodation);
+                    
                     selectedAccommodations.value.push(accommodation);
-                    console.log("here");
-                    console.log(selectedAccommodations)
+                    
                 }
             })
 
@@ -123,10 +122,10 @@ async function retrieveSelectedAccommodations(){
         message.value = e.response.data.message;
     })
 }
-async function retrieveAccommodations(requestcategory){
-    console.log(requestcategory);
-    if(Request.category != null){
-        await accommodationServices.getAllForCategory(requestcategory)
+async function retrieveAccommodations(category){
+    console.log(category);
+    if(category != null){
+        await accommodationServices.getAllForCategory(category)
         .then((response) => {
             Accommodations.value = response.data;
             displayedAccommodations.value = response.data;
@@ -157,7 +156,6 @@ function addAccommodation(item){
 
 onMounted(async () => {
   await retrieveRequest();
-  await retrieveAccommodations(Request.category);
   retriveStudentName();
    
 });
