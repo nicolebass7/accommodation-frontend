@@ -38,7 +38,7 @@ const acceptRequest = async () =>{
 
     selectedAccommodations.value.forEach(accommodation =>{
         const data = {
-            requestId: 1,
+            requestId: props.id,
             accommodationId: accommodation.id,
         };
         console.log(props.id)
