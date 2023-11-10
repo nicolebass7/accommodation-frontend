@@ -7,6 +7,9 @@ export default{
     get(id){
         return apiClient.get(`accommodations/${id}`);
     },
+    getAllForCategory(category){
+        return apiClient.get("/accommodations/" + category)
+    },
     create(data){
         return apiClient.post("accommodations", data);
     },
