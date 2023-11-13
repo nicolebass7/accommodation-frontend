@@ -15,6 +15,8 @@ const router = useRouter();
 const requests = ref([]);
 const displayedRequests = ref([]);
 const rejectedRequests = ref([]);
+const acceptedRequests = ref([]);
+
 const message = ref("");
 const studentNames = reactive(new Map());
 const keyword = ref("");
@@ -26,15 +28,20 @@ const viewRequest = (request) => {
 function searchRequest() {
     displayedRequests.value = [];
     rejectedRequests.value = [];
+    acceptedRequests.value = [];
     console.log("Search keyword is " + keyword.value);
     requests.value.forEach(request =>{
         if(keyword.value == request.studentId){
-            if(request.status != "rejected"){
-                displayedRequests.value.push(request);
-            }
-            else{
+            if(request.status == "rejected"){
                 rejectedRequests.value.push(request);
             }
+            else if(request.status == "accepted"){
+                acceptedRequests.value.push(request);
+
+            }
+            else{
+                displayedRequests.value.push(request);
+            } 
         }
         /*if(keyword.value == request.category){
             if(request.status != "rejected"){
@@ -51,24 +58,32 @@ function searchRequest() {
         nameRet.forEach(id =>{
             requests.value.forEach(request =>{
                 if(id == request.studentId){
-                    if(request.status != "rejected"){
-                        displayedRequests.value.push(request);
+                    if(request.status == "rejected"){
+                        rejectedRequests.value.push(request);
+                    }
+                    else if(request.status == "accepted"){
+                        acceptedRequests.value.push(request);
+
                     }
                     else{
-                        rejectedRequests.value.push(request);
+                        displayedRequests.value.push(request);
                     } 
                 }
             })
         
     })
     }
-    if(displayedRequests.value.length == 0 && rejectedRequests.value.length == 0){
+    if(displayedRequests.value.length == 0 && rejectedRequests.value.length == 0 && acceptedRequests.value.length == 0){
         requests.value.forEach(request =>{
-            if(request.status != "rejected"){
-                displayedRequests.value.push(request);
+            if(request.status == "rejected"){
+                rejectedRequests.value.push(request);
+            }
+            else if(request.status == "accepted"){
+                acceptedRequests.value.push(request);
+
             }
             else{
-                rejectedRequests.value.push(request)
+                displayedRequests.value.push(request);
             }
         })
         snackbar.value = true;
@@ -82,11 +97,16 @@ async function retrieveRequests () {
     .then(async (response) =>{
         requests.value = response.data;
         requests.value.forEach(request =>{
-            if(request.status != "rejected"){
-                displayedRequests.value.push(request);
+            if(request.status == "rejected"){
+                rejectedRequests.value.push(request)
+                
+            }
+            else if (request.status == "accepted"){
+                acceptedRequests.value.push(request)
+
             }
             else{
-                rejectedRequests.value.push(request)
+                displayedRequests.value.push(request);    
             }
         })
         
@@ -200,6 +220,35 @@ onMounted(async () => {
                 </v-card>
                 </template>
             <v-card color="#801529">
+                <v-card-title >
+                    Accepted Requests
+                </v-card-title>
+                </v-card>
+
+                <template v-for="(request) in acceptedRequests" : key="request.id">
+                
+                <v-card variant="outlined">
+                    <template v-slot:title >
+                        <p v-text=studentNames.get(request.studentId)></p>
+                    </template>
+                    <template v-slot:subtitle>
+                        {{request.category}}
+                    </template>
+                    <template v-slot:text>
+                        {{request.status}}
+                        <v-divider></v-divider>
+                        
+                    </template>
+                    <v-card-actions>
+                        <v-btn @click = "viewRequest(request)"
+                        prepend-icon = "mdiClipboard"
+                        >
+                        Review
+                    </v-btn>
+                    </v-card-actions>
+                </v-card>
+                </template>
+                <v-card color="#801529">
                 <v-card-title >
                     Rejected Requests
                 </v-card-title>
